@@ -1,0 +1,26 @@
+---
+
+- hosts: localhost
+
+  tasks:
+
+  - name: Add mysql group
+    shell: groupadd -g 40 mysql
+
+  - name: Add mysql user
+    shell: useradd -c "MySQL Server" -d /srv/mysql -g mysql -s /bin/false -u 40 mysql
+
+  - name: Install database priviledge tables
+    shell: mysql_install_db --basedir=/usr --datadir=/srv/mysql --user=mysql
+
+  - name: Set ownership of database storage location to mysql user
+    shell: chown -R mysql:mysql /srv/mysql
+
+  - name: Setup mysql server daemon
+    shell: install -v -m755 -o mysql -g mysql -d /run/mysqld
+
+  - name: Run mysql database server for configuration
+    shell: mysqld_safe --user=mysql 2>&1 >/dev/null &
+
+  - name: Set mysql root admin password
+    shell: mysqladmin -u root password PASSWORD

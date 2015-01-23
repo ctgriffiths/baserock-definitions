@@ -1,0 +1,59 @@
+name: storyboard
+kind: stratum
+build-depends:
+- morph: strata/tools.morph
+- morph: strata/nfs.morph
+chunks:
+- name: mariadb
+  morph: strata/storyboard/mariadb-git.morph
+  repo: upstream:mariadb-git
+  ref: mariadb-10.1.0
+  build-depends: []
+- name: pip
+  repo: upstream:pip.git
+  ref: d4b691b743a91500cf49119d28a805db8313f129
+  unpetrify-ref: master
+  build-depends: []
+- name: pbr
+  repo: upstream:pbr
+  ref: e12574fbda4bd2ef61cc3c06c43fe2f50585f60e
+  unpetrify-ref: baserock/morph
+  build-depends: []
+- name: netaddr
+  repo: upstream:netaddr
+  ref: f64ae19e533ffa5522dcba1fc833975cb2ee88a5
+  unpetrify-ref: baserock/morph
+  build-depends: []
+- name: oslo
+  repo: github:openstack/oslo.config
+  ref: eac2c57f7f4c34233a7d392c37a62132d6c7b99c
+  build-depends:
+  - pbr
+  - pip
+  - netaddr
+- name: pytz
+  morph: strata/openstack-clients/pytz.morph
+  repo: upstream:pytz
+  ref: 384207f01fd5b8bf1eb20cb64c17679084731944
+  unpetrify-ref: baserock/morph
+  build-depends: []
+- name: babel
+  repo: upstream:babel
+  ref: d764b35bc3910b8f67ff811752df615afa7667f6
+  unpetrify-ref: baserock/morph
+  build-depends:
+  - pytz
+- name: storyboard-api
+  morph: strata/storyboard/storyboard-api.morph
+  repo: https://git.openstack.org/openstack-infra/storyboard
+  ref: aabced6a4c088b8c13eab6cb9e55b088b721c96b
+  build-depends:
+  - oslo
+  - pip
+  - pbr
+  - babel
+- name: storyboard-webclient
+  morph: strata/storyboard/storyboard-webclient.morph
+  repo: https://git.openstack.org/openstack-infra/storyboard-webclient
+  ref: 9b44f1b682176f73c96de14175cfbfbd170b8995
+  build-depends: []

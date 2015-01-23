@@ -1,0 +1,11 @@
+[Unit]
+Description=Run mariadb-setup Ansible scripts
+Requires=network.target
+After=network.target
+Requires=opensshd.service
+After=opensshd.service
+Requires=local-fs.target
+After=local-fs.target
+
+[Service]
+ExecStart=/usr/bin/ansible-playbook -v -i /usr/lib/mariadb-setup/ansible/hosts /usr/lib/mariadb-setup/ansible/mariadb-setup.yml

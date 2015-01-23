@@ -1,0 +1,19 @@
+name: open-stack-storyboard
+kind: cluster
+description: |
+  Deploy storyboard morphology into openstack
+systems:
+- morph: systems/storyboard-x86_64.morph
+  deploy-defaults:
+    INSTALL_FILES: mariadb/manifest
+  deploy:
+      openstack-image:
+          type: openstack
+          location: location_url
+          DISK_SIZE: 4G
+          OPENSTACK_USER: user
+          OPENSTACK_PASSWORD: password
+          OPENSTACK_TENANT: tennant
+          OPENSTACK_IMAGENAME: storyboard_craig_testing
+          CLOUD_INIT: yes
+          ERNEL_ARGS: console=ttyS0 console=tty0

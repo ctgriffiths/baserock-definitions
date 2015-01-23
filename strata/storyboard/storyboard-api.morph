@@ -1,0 +1,8 @@
+name: storyboard-api
+kind: chunk
+configure-commands: []
+build-commands:
+- python setup.py build --verbose
+install-commands:
+- python setup.py install --prefix "$PREFIX" --root "$DESTDIR" --verbose
+system-integration: []

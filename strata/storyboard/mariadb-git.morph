@@ -1,0 +1,26 @@
+name: mariadb-git
+kind: chunk
+build-system: cmake
+build-commands:
+- sed -i "s@data/test@\${INSTALL_MYSQLTESTDIR}@g" sql/CMakeLists.txt 
+- sed -i "s/srv_buf_size/srv_sort_buf_size/" storage/innobase/row/row0log.cc
+- |
+  cmake -DCMAKE_BUILD_TYPE=Release                       \
+        -DCMAKE_INSTALL_PREFIX=/usr                      \
+        -DINSTALL_DOCDIR=share/doc/mariadb-10.1.0        \
+        -DINSTALL_DOCREADMEDIR=share/doc/mariadb-10.1.0  \
+        -DINSTALL_MANDIR=share/man                       \
+        -DINSTALL_MYSQLSHAREDIR=share/mysql              \
+        -DINSTALL_MYSQLTESTDIR=share/mysql/test          \
+        -DINSTALL_PLUGINDIR=lib/mysql/plugin             \
+        -DINSTALL_SBINDIR=sbin                           \
+        -DINSTALL_SCRIPTDIR=bin                          \
+        -DINSTALL_SQLBENCHDIR=share/mysql/bench          \
+        -DINSTALL_SUPPORTFILESDIR=share/mysql            \
+        -DMYSQL_DATADIR=/srv/mysql                       \
+        -DMYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock        \
+        -DWITH_EXTRA_CHARSETS=complex                    \
+        -DWITH_EMBEDDED_SERVER=ON                        \
+        -DTOKUDB_OK=0    
+- export DESTDIR=''; make
+
